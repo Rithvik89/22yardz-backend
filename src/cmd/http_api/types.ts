@@ -16,6 +16,7 @@ import MiscManager from "../../internal/misc_manager/misc_manager";
 import ExploreManager from "../../internal/explore_manager/explore_manager";
 import Mailer from "../../pkg/mailer/mailer";
 import multer from "multer";
+import winston from "winston";
 interface CustomRequest extends Request {
   context: any;
 }
@@ -156,6 +157,7 @@ export class App {
   localFileStorage: IFileStorage;
   remoteFileStorage: IFileStorage;
   mailer: Mailer;
+  logger:winston.Logger;
   constructor(
     srv: Express,
     authManager: AuthManager,
@@ -172,7 +174,8 @@ export class App {
     imageResolver: ImageResolver,
     localFileStore: IFileStorage,
     remoteFileStorage: IFileStorage,
-    mailer: Mailer
+    mailer: Mailer,
+    logger:winston.Logger
   ) {
     this.srv = srv;
     this.notificationManager = notificationManager;
@@ -190,6 +193,7 @@ export class App {
     this.localFileStorage = localFileStore;
     this.remoteFileStorage = remoteFileStorage;
     this.mailer = mailer;
+    this.logger = logger;
   }
   InHandler(handler: RouteHandler) {
     return (req: Request, res: Response, next: NextFunction) => {

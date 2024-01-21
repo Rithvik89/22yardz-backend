@@ -10,6 +10,7 @@ import {
   ServerInit,
   SinkInit,
 } from "./init";
+import logger from "../../util/logger";
 import { App } from "./types";
 import Redis from "../../pkg/kv_store/redis";
 import { ImageResolver } from "../../pkg/image_resolver/image_resolver_";
@@ -23,7 +24,7 @@ import ExploreManager from "../../internal/explore_manager/explore_manager";
 import Mailer from "../../pkg/mailer/mailer";
 
 async function Init() {
-  const srv = ServerInit();
+    const srv = ServerInit();
   const db = await DBInit();
   const r = (await RedisInit()) as any;
   const redis = new Redis(r);
@@ -72,7 +73,8 @@ async function Init() {
     imageResolver,
     localFileStorage,
     remoteFileStorage,
-    mailer
+    mailer,
+    logger
   );
   HandleRoutesFor(app);
   SinkInit(app);
@@ -83,9 +85,13 @@ async function Init() {
 Init()
   .then((app) => {
     app.srv.listen(4000, () => {
-      console.log(`Node app running at ${4000}`);
+      app.logger.info({
+        message:`Node app running at ${4000}`
+      });
     });
   })
   .catch((err) => {
-    console.log(err);
+    logger.error({
+      message:{err}
+    })
   });

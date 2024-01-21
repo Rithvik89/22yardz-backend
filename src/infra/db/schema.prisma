@@ -34,7 +34,8 @@ model Users {
   Stories                 Stories[]
   ForNotificatoin         Notifications[]      @relation("for")
   TriggeredByNotification Notifications[]      @relation("triggered_by")
-  AdminUsers              AdminUsers[]           
+  AdminUsers AdminUsers[] 
+
 
   @@map("users")
 }
@@ -258,10 +259,12 @@ model Stories {
 }
 
 model AdminUsers {
-  user_id Int  @id
-  user Users @relation(fields: [user_id],references: [user_id])
+  mail_id String 
   open_to String
+  user      Users  @relation(fields: [user_id], references: [user_id])
+  user_id   Int    
 
+  @@unique([mail_id,open_to])
   @@map("admin_users")
   
 

@@ -6,6 +6,8 @@ const MAIL_ID = process.env.MAIL_ID;
 const MAIL_PASSWORD = process.env.MAIL_PASSWORD;
 const MAIL_PORT = process.env.MAIL_PORT;
 
+console.log(MAIL_HOST,MAIL_ID,MAIL_PASSWORD,MAIL_PORT)
+
 function MailValidator(mail_id: string): boolean {
   return EmailValidator.validate(mail_id);
 }

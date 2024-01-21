@@ -204,10 +204,11 @@ CREATE TABLE `stories` (
 
 -- CreateTable
 CREATE TABLE `admin_users` (
-    `user_id` INTEGER NOT NULL,
+    `mail_id` VARCHAR(191) NOT NULL,
     `open_to` VARCHAR(191) NOT NULL,
+    `user_id` INTEGER NOT NULL,
 
-    PRIMARY KEY (`user_id`)
+    UNIQUE INDEX `admin_users_mail_id_open_to_key`(`mail_id`, `open_to`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
