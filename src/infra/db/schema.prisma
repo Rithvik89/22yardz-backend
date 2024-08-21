@@ -275,3 +275,39 @@ enum NotificationStatus {
   Seen
   Read
 }
+
+// These table are regarding Openhouse
+
+model BadmintonMatches{
+  match_id Int @id @default(autoincrement()) @db.Int
+  type BadmintonMatchTypes
+  team_a String
+  team_b String
+  start_time DateTime @default(now())
+  end_time DateTime 
+  sets  Int
+  status Boolean
+
+  rallies BadmintonRallies[]  
+
+  @@map("badminton_matches")
+}
+
+model BadmintonRallies{
+  rally_id String @id
+  rally_count Int
+  match_id Int 
+  commentry String
+  timeStamp DateTime
+  match BadmintonMatches @relation(fields: [match_id], references: [match_id])
+}
+
+enum BadmintonMatchTypes {
+  Singles
+  Doubles
+  MixedDoubles
+}
+
+
+
+
